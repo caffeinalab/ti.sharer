@@ -1,0 +1,5 @@
+<Alloy>
+	<Window id="cfnSharerWin" class="cfnSharerWin">
+		<View id="cfnSharerView" class="cfnSharerView"></View>
+	</Window>
+</Alloy>

@@ -1,0 +1,12 @@
+".cfnSharerWin":{
+	backgroundColor: '#A000'
+},
+".cfnSharerView":{
+	height: Ti.UI.SIZE,
+	bottom: 0,
+	backgroundColor: '#fff',
+	viewShadowColor: '#9000',
+	viewShadowOffset: { x:0, y: -5 },
+	viewShadowRadius: 4,
+	layout: 'horizontal',
+},
