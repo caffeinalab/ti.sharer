@@ -109,7 +109,9 @@ function show(_shareObj, opt) {
 	// preset to animate on open
 	$.cfnSharerView.bottom = -300;
 	$.cfnSharerWin.opacity = 0;
-	$.cfnSharerWin.open();
+	$.cfnSharerWin.open({
+		navBarHidden: true
+	});
 }
 exports.show = show;
 
