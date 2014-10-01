@@ -1,5 +1,6 @@
 ".sharer_Win":{
 	modal: false,
+	backgroundColor: '#C000'
 },
 ".sharer_Title":{
 	top: 40,

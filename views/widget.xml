@@ -1,9 +1,6 @@
 <Alloy>
 	<Window id="sharer_Win" class="sharer_Win">
 
-		<View id="blurView" />
-		<View id="blurViewOpacity" />
-
 		<Label id="sharer_Title" class="sharer_Title" />
 		<View class="sharer_Hr" id="sharer_Hr" />
 
