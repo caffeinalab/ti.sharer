@@ -42,7 +42,7 @@ Sharer.show({
 
 #### `blur` (Boolean, default: true)
 
-*This option require the `bencoding.blur` module.*
+*This option will be available on 3.4.0 GA.*
 
 Blur the window.
 
