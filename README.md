@@ -1,4 +1,6 @@
-# com.caffeinalab.titanium.sharer
+# Caffeina.Sharer
+
+### com.caffeinalab.titanium.sharer
 
 A simple **Sharing** widget heavy inspired to **AirBnb**, with default
  drivers and the ability to add custom drivers to share.
