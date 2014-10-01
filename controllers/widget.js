@@ -162,16 +162,18 @@ exports.show = function(so, opt) {
 		Ti.Media.takeScreenshot(function(e){
 			try {
 				var Blur = require('bencoding.blur');
-				$.blurView.add(Blur.createGPUBlurImageView({
-					height: Ti.UI.FILL,
-					width: Ti.UI.FILL,
-					image: e.media,
-					blur: {
-						type: Blur.GAUSSIAN_BLUR,
-						radiusInPixels: 30
-					}
-				}));
-				$.blurView.animate({ opacity: 1 });
+				if (Blur) {
+					$.blurView.add(Blur.createGPUBlurImageView({
+						height: Ti.UI.FILL,
+						width: Ti.UI.FILL,
+						image: e.media,
+						blur: {
+							type: Blur.GAUSSIAN_BLUR,
+							radiusInPixels: 30
+						}
+					}));
+					$.blurView.animate({ opacity: 1 });
+				}
 			} catch (err) {}
 		});
 	}
