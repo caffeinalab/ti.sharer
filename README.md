@@ -1,11 +1,13 @@
-# com.caffeinalab.titanium.sharer
+# Caffeina.Sharer
+
+### com.caffeinalab.titanium.sharer
 
 A simple **Sharing** widget heavy inspired to **AirBnb**, with default
  drivers and the ability to add custom drivers to share.
 
 The widget use [Trimethyl.Share](https://github.com/CaffeinaLab/Trimethyl), so you **must** install Trimethyl to use it, or define your own custom drivers.
 
-![](http://f.cl.ly/items/3e0n3q2r0Y1o1g3r3K0C/IMG_1184.PNG)
+![](http://cl.ly/image/0i092a3w2L1H/687474703a2f2f662e636c2e6c792f6974656d732f3365306e337132723059316f31673372334b30432f494d475f313138342e504e47_iphone5c_yellow_portrait.png)
 
 ## Installation
 
