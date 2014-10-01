@@ -1,155 +1,187 @@
-var args = arguments[0] || {};
-args = _.extend({
-	where: ['facebook','twitter','mail','sms','whatsapp','googleplus']
-}, args);
+var WNAME = 'com.caffeinalab.titanium.sharer';
+
+if (Ti.Trimethyl == null) {
+	Ti.API.warn(WNAME+': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
+}
 
 var shareObj = null;
-var Sharer = require('T/sharer');
 
-var shareSystems = {
+var drivers = {
 
 	facebook: {
-		icon: WPATH('images/facebook.png'),
-		background: '#3b5998',
-		callback: Sharer.facebook
-	},
-
-	twitter: {
-		icon: WPATH('images/twitter.png'),
-		background: '#55acee',
-		callback: Sharer.twitter
-	},
-
-	mail: {
-		icon: WPATH('images/mail.png'),
-		background: '#3C68E1',
-		callback: Sharer.mail
-	},
-
-	sms: {
-		icon: WPATH('images/messages.png'),
-		background: '#46E825',
-		callback: Sharer.sms
-	},
-
-	whatsapp: {
-		icon: WPATH('images/whatsapp.png'),
-		background: '#34af23',
-		callback: Sharer.whatsapp
-	},
-
-	googleplus: {
-		icon: WPATH('images/gplus.png'),
-		background: '#dd4b39',
-		callback: Sharer.googleplus
-	},
-
-	other: {
-		callback: Sharer.multi,
-		proxyObject: 'Button',
-		proxyProperties: {
-			width: Ti.UI.FILL,
-			height: 50,
-			title: L('Others'),
-			color: '#555',
-			font: { fontSize: 18 }
+		callback: function(e) {
+			require('T/sharer').facebook(e.shareObj);
+		},
+		args: {
+			title: '  Facebook',
+			image: WPATH('images/facebook.png'),
+			backgroundColor: '#3b5998',
+			borderWidth: 0.5,
+			borderColor: '#2B406E'
 		}
-	}
+	},
+	twitter: {
+		callback: function(e) {
+			require('T/sharer').twitter(e.shareObj);
+		},
+		args: {
+			title: '  Twitter',
+			image: WPATH('images/twitter.png'),
+			backgroundColor: '#55acee',
+			borderWidth: 0.5,
+			borderColor: '#147AC8'
+		}
+	},
+	googleplus: {
+		callback: function(e) {
+			require('T/sharer').googleplus(e.shareObj);
+		},
+		args: {
+			title: '  Google+',
+			image: WPATH('images/googleplus.png'),
+			backgroundColor: '#dd4b39',
+			borderWidth: 0.5,
+			borderColor: '#AE2E1E'
+		}
+	},
+	whatsapp: {
+		callback: function(e) {
+			require('T/sharer').whatsapp(e.shareObj);
+		},
+		args: {
+			title: 'Whatsapp',
+			borderColor: '#fff',
+		}
+	},
+	email: {
+		callback: function(e) {
+			require('T/sharer').email(e.shareObj);
+		},
+		args: {
+			borderColor: '#fff',
+			title: 'Email',
+		}
+	},
+	sms: {
+		callback: function(e) {
+			require('T/sharer').sms(e.shareObj);
+		},
+		args: {
+			borderColor: '#fff',
+			title: 'SMS'
+		}
+	},
+	copytoclipboard: {
+		callback: function(e) {
+			Ti.UI.Clipboard.setText(e.shareObj.url);
+			e.source.titleid = L('Link copied!');
+		},
+		args: {
+			borderColor: '#fff',
+			titleid: L('Copy link')
+		}
+	},
 
 };
-exports.shareSystems = shareSystems;
 
-function genShareButton(def) {
-	var $ui = Ti.UI[ 'create' + (def.proxyObject?def.proxyObject:'View') ](_.extend({
-		borderColor: '#eee',
-		width: Alloy.Globals.SCREEN_WIDTH/3,
-		height: Alloy.Globals.SCREEN_WIDTH/3,
-		callback: def.callback,
-		icon: !!def.icon,
-		onBackground: def.background
-	}, def.proxyProperties || {}));
+exports.setDriver = function(name, def) {
+	drivers[name] = def;
+};
 
-	if (def.icon) {
-		$ui.add(Ti.UI.createImageView({
-			touchEnabled: false,
-			baseImage: def.icon,
-			image: def.icon.replace(/(\.\w+)$/,"_0$1")
-		}));
+var args = _.defaults(arguments[0] || {}, {
+	blur: true,
+	drivers: [
+		'facebook',
+		'twitter',
+		'googleplus',
+		'whatsapp',
+		'email',
+		'sms',
+		'copytoclipboard'
+	]
+});
+
+function parseArgs(opt) {
+	var r = _.extend({}, args, opt);
+	if (_.isString(r.drivers)) {
+		r.drivers = opt.drivers.split(',');
+	}
+	return r;
+}
+
+function enableDriver(name) {
+	if (drivers[name] == null) {
+		Ti.API.error(WNAME+': No share system found with name ' + name);
+		return;
 	}
 
-	return $ui;
+	var cArgs = drivers[name].args;
+	cArgs.name = name;
+
+	$.sharer_Cont.add(Widget.createController('button', cArgs).getView());
 }
 
-function enableShareSystems(where) {
-	// Reset children
-	_.each($.cfnSharerView.children||[], function($c){
-		$.cfnSharerView.remove($c);
+function setDrivers(drivers) {
+	_.each($.sharer_Cont.children || [], function($c) {
+		$.sharer_Cont.remove($c);
 	});
-
-	// add the buttons
-	_.each(where, function(ss) {
-		if (_.isString(ss)) {
-			$.cfnSharerView.add(genShareButton(shareSystems[ss]));
-		} else if (_.isObject(ss)) {
-			$.cfnSharerView.add(genShareButton(ss));
-		}
-	});
+	_.each(drivers, enableDriver);
 }
-
-
-// Show this view
-function show(_shareObj, opt) {
-	shareObj = _shareObj;
-	opt = _.extend(args, opt || {});
-
-	//enable the buttons
-	if (_.isString(opt.where)) opt.where = opt.where.split(',');
-	enableShareSystems(opt.where);
-
-	// preset to animate on open
-	$.cfnSharerView.bottom = -300;
-	$.cfnSharerWin.opacity = 0;
-	$.cfnSharerWin.open({
-		navBarHidden: true
-	});
-}
-exports.show = show;
-
-function hide() {
-	$.cfnSharerView.animate({ bottom: -300, duration: 200 }, function() {
-		$.cfnSharerWin.animate({ opacity: 0 }, function(){
-			$.cfnSharerWin.close();
-		});
-	});
-}
-exports.hide = hide;
-
 
 /*
-Listeners
+UI Listeners
 */
 
-$.cfnSharerWin.addEventListener('open', function(e){
-	$.cfnSharerWin.animate({ opacity: 1 });
-	$.cfnSharerView.animate({ bottom: 0, duration: 200 });
+$.sharer_Cont.addEventListener('click', function(e) {
+	if (e.source.name == null) return;
+
+	drivers[e.source.name].callback({
+		shareObj: shareObj,
+		source: e.source
+	});
 });
 
-$.cfnSharerWin.addEventListener('touchstart', function(e){
-	if (!e.source.icon) return;
-	e.source.children[0].image = e.source.children[0].baseImage.replace(/(\.\w+)$/,"_1$1");
-	e.source.backgroundColor = e.source.onBackground;
+
+$.sharer_Close.addEventListener('click', function() {
+	exports.hide();
 });
 
-$.cfnSharerWin.addEventListener('touchend', function(e){
-	if (!e.source.icon) return;
-	e.source.children[0].image = e.source.children[0].baseImage.replace(/(\.\w+)$/,"_0$1");
-	e.source.backgroundColor = "#fff";
-});
 
-$.cfnSharerWin.addEventListener('click', function(e){
-	if (undefined===e.source.callback) {
-		hide();
-	} else {
-		e.source.callback(shareObj);
+exports.show = function(so, opt) {
+	if (so == null) {
+		throw new Error('Please set a sharing object');
 	}
-});
+
+	shareObj = _.clone(so);
+	opt = parseArgs(opt);
+
+	// Add the buttons
+	setDrivers(opt.drivers);
+
+	if (args.blur === true) {
+		Ti.Media.takeScreenshot(function(e){
+			try {
+				var Blur = require('bencoding.blur');
+				$.blurView.add(Blur.createGPUBlurImageView({
+					height: Ti.UI.FILL,
+					width: Ti.UI.FILL,
+					image: e.media,
+					blur: {
+						type: Blur.GAUSSIAN_BLUR,
+						radiusInPixels: 30
+					}
+				}));
+				$.blurView.animate({ opacity: 1 });
+			} catch (err) {}
+		});
+	}
+
+	// Open the window
+	$.sharer_Win.open();
+
+};
+
+
+exports.hide = function() {
+	$.sharer_Win.close();
+};

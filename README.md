@@ -1,0 +1,94 @@
+# com.caffeinalab.titanium.sharer
+
+A simple **Sharing** widget heavy inspired to **AirBnb*, with default
+ drivers and the ability to add custom drivers to share.
+
+The widget use [Trimethyl.Share](https://github.com/CaffeinaLab/Trimethyl), so you **must** install Trimethyl to use it, or define your own custom drivers.
+
+![](http://f.cl.ly/items/3e0n3q2r0Y1o1g3r3K0C/IMG_1184.PNG)
+
+## Installation
+
+#### Via Gittio
+
+```
+gittio install com.caffeinalab.titanium.sharer
+```
+
+#### Via Github
+
+Download the latest release, and add in your *config.json*, under `dependencies`:
+
+```json
+"dependencies": {
+    "com.caffeinalab.titanium.sharer": "*"
+}
+```
+
+## Usage
+
+
+```javascript
+var Sharer = Alloy.createWidget('com.caffeinalab.titanium.sharer', { /* opt */ });
+Sharer.show({
+	url: 'http://google.it',
+	text: "Your awesome message!"
+});
+```
+
+## Constructor options
+
+#### `blur` (Boolean, default: true)
+
+*This option require the `bencoding.blur` module.*
+
+Blur the window.
+
+#### `drivers` (String/Array, default: ALL)
+
+Set the global enabled drivers. 
+With an array `[ 'facebook', 'twitter', 'sms' ]` or a comma-separated String `facebook,twitter,sms`.
+
+## API
+
+### `show(so, [opt]) `
+
+The `so` object represents a `Trimethyl.share` argument.
+
+* `url`: The link to share
+* `text`: The personal share message to use, when supported by driver.
+* `image`: The image to share. Can be a URL or `Ti.Blob`.
+
+The `opt` are merged right with the `Constructor options`.
+
+### `hide()`
+
+Close the mask.
+
+### `setDriver(name, def)`
+
+Add/replace a driver definition.
+
+A **driver definition* is in this form
+
+```javascript
+{
+	callback: function(e) { }, // The callback invoked on click (`e.source` represents the Button`
+	args: {} // The property passed to the button
+}
+```
+
+An example:
+
+```javascript
+copytoclipboard: {
+	callback: function(e) {
+		Ti.UI.Clipboard.setText(e.shareObj.url);
+		e.source.titleid = L('Link copied!');
+	},
+	args: {
+		borderColor: '#fff',
+		titleid: L('Copy link')
+	}
+}
+```

@@ -1,0 +1,11 @@
+".sharer_Button":{
+	width: Ti.UI.FILL,
+	height: 42,
+	borderRadius: 2,
+	left: 30,
+	right: 30,
+	top: 10,
+	font: {
+		fontSize: 16
+	}
+}
