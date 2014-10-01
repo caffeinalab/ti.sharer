@@ -1,6 +1,6 @@
 # com.caffeinalab.titanium.sharer
 
-A simple **Sharing** widget heavy inspired to **AirBnb*, with default
+A simple **Sharing** widget heavy inspired to **AirBnb**, with default
  drivers and the ability to add custom drivers to share.
 
 The widget use [Trimethyl.Share](https://github.com/CaffeinaLab/Trimethyl), so you **must** install Trimethyl to use it, or define your own custom drivers.
@@ -69,7 +69,7 @@ Close the mask.
 
 Add/replace a driver definition.
 
-A **driver definition* is in this form
+A **driver definition** is in this form
 
 ```javascript
 {
