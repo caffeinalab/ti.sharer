@@ -1,4 +1,4 @@
-# Caffeina.Sharer
+# Ti.Sharer
 
 ### com.caffeinalab.titanium.sharer
 
