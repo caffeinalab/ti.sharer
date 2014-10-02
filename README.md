@@ -19,7 +19,7 @@ gittio install com.caffeinalab.titanium.sharer
 
 #### Via Github
 
-Download the latest release, and add in your *config.json*, under `dependencies`:
+Download the latest release, unzip in `app/widgets` and add in your *config.json*, under `dependencies`:
 
 ```json
 "dependencies": {
@@ -28,7 +28,6 @@ Download the latest release, and add in your *config.json*, under `dependencies`
 ```
 
 ## Usage
-
 
 ```javascript
 var Sharer = Alloy.createWidget('com.caffeinalab.titanium.sharer', { /* opt */ });
@@ -40,7 +39,7 @@ Sharer.show({
 
 ## Constructor options
 
-#### `blur` (Boolean, default: true)
+#### `blur` (Boolean, default: `true`)
 
 *This option will be available on 3.4.0 GA.*
 
@@ -53,7 +52,7 @@ With an array `[ 'facebook', 'twitter', 'sms' ]` or a comma-separated String `fa
 
 ## API
 
-### `show(so, [opt]) `
+#### `show(so, [opt]) `
 
 The `so` object represents a `Trimethyl.share` argument.
 
@@ -63,11 +62,11 @@ The `so` object represents a `Trimethyl.share` argument.
 
 The `opt` are merged right with the `Constructor options`.
 
-### `hide()`
+#### `hide()`
 
 Close the mask.
 
-### `setDriver(name, def)`
+#### `setDriver(name, def)`
 
 Add/replace a driver definition.
 
