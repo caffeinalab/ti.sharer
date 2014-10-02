@@ -146,6 +146,11 @@ $.sharer_Close.addEventListener('click', function() {
 	exports.hide();
 });
 
+if (OS_ANDROID) {
+	$.sharer_Win.addEventListener('open', function(e){
+		$.sharer_Win.activity.actionBar.hide();
+	});
+}
 
 exports.show = function(so, opt) {
 	if (so == null) {

@@ -1,4 +1,5 @@
 ".sharer_Button":{
+	backgroundColor: 'transparent',
 	width: Ti.UI.FILL,
 	height: 42,
 	borderRadius: 2,

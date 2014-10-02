@@ -1,5 +1,6 @@
 ".sharer_Win":{
 	modal: false,
+	navBarHidden: true,
 	backgroundColor: '#C000'
 },
 ".sharer_Title":{
@@ -26,15 +27,10 @@
 },
 ".sharer_Close":{
 	color: '#fff',
+	backgroundColor: 'transparent',
 	bottom: 30,
 	image: WPATH('/images/close.png'),
 	font:{
 		fontSize: 30
 	},
 },
-"#blurView":{
-	opacity: 0
-},
-"#blurViewOpacity": {
-	backgroundColor: '#A000'
-}
