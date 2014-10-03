@@ -74,11 +74,11 @@ var drivers = {
 	copytoclipboard: {
 		callback: function(e) {
 			Ti.UI.Clipboard.setText(e.shareObj.url);
-			e.source.titleid = L('Link copied!');
+			e.source.title = L('Link copied!');
 		},
 		args: {
 			borderColor: '#fff',
-			titleid: L('Copy link')
+			title: L('Copy link')
 		}
 	},
 

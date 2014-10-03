@@ -2,8 +2,7 @@
 
 ### com.caffeinalab.titanium.sharer
 
-A simple **Sharing** widget heavy inspired to **AirBnb**, with default
- drivers and the ability to add custom drivers to share.
+A simple **Sharing** widget heavy inspired to **AirBnb**, with default drivers and the ability to add custom drivers to share.
 
 The widget use [Trimethyl.Share](https://github.com/CaffeinaLab/Trimethyl), so you **must** install Trimethyl to use it, or define your own custom drivers.
 
@@ -47,7 +46,7 @@ Blur the window.
 
 #### `drivers` (String/Array, default: ALL)
 
-Set the global enabled drivers. 
+Set the global enabled drivers.
 With an array `[ 'facebook', 'twitter', 'sms' ]` or a comma-separated String `facebook,twitter,sms`.
 
 ## API
