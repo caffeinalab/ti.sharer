@@ -1,7 +1,7 @@
 {
 	"id": "com.caffeinalab.titanium.sharer",
 	"name": "Ti.Sharer",
-	"description" : "Alloy Widget to Share all the things!",
+	"description" : "Sharing widget heavy inspired to AirBNB, with default drivers and the ability to add custom drivers to share.",
 	"author": "Flavio De Stefano",
 	"version": "2.0.2",
 	"copyright":"Copyright (c) 2014",
