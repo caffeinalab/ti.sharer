@@ -1,6 +1,6 @@
 {
 	"id": "com.caffeinalab.titanium.sharer",
-	"name": "com.caffeinalab.titanium.sharer",
+	"name": "Ti.Sharer",
 	"description" : "Alloy Widget to Share all the things!",
 	"author": "Flavio De Stefano",
 	"version": "2.0.2",
