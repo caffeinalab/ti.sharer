@@ -1,5 +1,4 @@
 ".sharer_Win":{
-	modal: false,
 	navBarHidden: true,
 	backgroundColor: '#C000'
 },
@@ -20,10 +19,11 @@
 	backgroundColor: '#9FFF'
 },
 ".sharer_Cont":{
-	height: Ti.UI.SIZE,
 	top: 80,
 	bottom: 100,
-	layout: 'vertical',
+	scrollable: true,
+	backgroundColor: 'transparent',
+	separatorColor: 'transparent',
 },
 ".sharer_Close":{
 	color: '#fff',

@@ -74,11 +74,11 @@ var drivers = {
 	copytoclipboard: {
 		callback: function(e) {
 			Ti.UI.Clipboard.setText(e.shareObj.url);
-			e.source.title = L('Link copied!');
+			e.source.title = L('link_copied', 'Link copied!');
 		},
 		args: {
 			borderColor: '#fff',
-			title: L('Copy link')
+			title: L('copy_link', 'Copy link')
 		}
 	},
 
@@ -109,23 +109,18 @@ function parseArgs(opt) {
 	return r;
 }
 
-function enableDriver(name) {
+function getDriverRow(name) {
 	if (drivers[name] == null) {
-		Ti.API.error(WNAME+': No share system found with name ' + name);
-		return;
+		throw new Error(WNAME+': No share system found with name ' + name);
 	}
 
-	var cArgs = drivers[name].args;
-	cArgs.name = name;
-
-	$.sharer_Cont.add(Widget.createController('button', cArgs).getView());
+	var $row = Ti.UI.createTableViewRow({ driver: name });
+	$row.add( Widget.createController('button', drivers[name].args).getView() );
+	return $row;
 }
 
 function setDrivers(drivers) {
-	_.each($.sharer_Cont.children || [], function($c) {
-		$.sharer_Cont.remove($c);
-	});
-	_.each(drivers, enableDriver);
+	$.sharer_Cont.data = _.map(drivers, getDriverRow);
 }
 
 /*
@@ -133,9 +128,8 @@ UI Listeners
 */
 
 $.sharer_Cont.addEventListener('click', function(e) {
-	if (e.source.name == null) return;
-
-	drivers[e.source.name].callback({
+	if (e.rowData.driver == null) return;
+	drivers[e.rowData.driver].callback({
 		shareObj: shareObj,
 		source: e.source
 	});
@@ -160,18 +154,9 @@ exports.show = function(so, opt) {
 	shareObj = _.clone(so);
 	opt = parseArgs(opt);
 
-	// Add the buttons
 	setDrivers(opt.drivers);
-
-	if (args.blur === true) {
-		// Waiting for 3.4.0
-	}
-
-	// Open the window
 	$.sharer_Win.open();
-
 };
-
 
 exports.hide = function() {
 	$.sharer_Win.close();

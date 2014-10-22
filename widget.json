@@ -3,7 +3,7 @@
 	"name": "com.caffeinalab.titanium.sharer",
 	"description" : "Alloy Widget to Share all the things!",
 	"author": "Flavio De Stefano",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"copyright":"Copyright (c) 2014",
 	"license":"Apache License, Version 2.0",
 	"min-alloy-version": "1.0",
