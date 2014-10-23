@@ -8,7 +8,7 @@
 	textAlign: 'center',
 	color: '#fff',
 	font:{
-		fontSize: 16
+		fontSize: 20
 	}
 },
 ".sharer_Hr":{

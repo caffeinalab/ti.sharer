@@ -2,9 +2,7 @@
 	<Window id="sharer_Win" class="sharer_Win">
 		<Label id="sharer_Title" class="sharer_Title" />
 		<View class="sharer_Hr" id="sharer_Hr" />
-
 		<TableView id="sharer_Cont" class="sharer_Cont" />
-
 		<Button id="sharer_Close" class="sharer_Close" />
 	</Window>
 </Alloy>

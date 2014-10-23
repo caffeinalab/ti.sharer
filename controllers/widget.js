@@ -1,13 +1,8 @@
 var WNAME = 'com.caffeinalab.titanium.sharer';
-
-if (Ti.Trimethyl == null) {
-	Ti.API.warn(WNAME+': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
-}
+if (Ti.Trimethyl == null) Ti.API.warn(WNAME + ': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
 
 var shareObj = null;
-
 var drivers = {
-
 	facebook: {
 		callback: function(e) {
 			require('T/sharer').facebook(e.shareObj);
@@ -62,13 +57,13 @@ var drivers = {
 			title: 'Email',
 		}
 	},
-	sms: {
+	message: {
 		callback: function(e) {
-			require('T/sharer').sms(e.shareObj);
+			require('T/sharer').message(e.shareObj);
 		},
 		args: {
 			borderColor: '#fff',
-			title: 'SMS'
+			title: L('Message')
 		}
 	},
 	copytoclipboard: {
@@ -81,47 +76,38 @@ var drivers = {
 			title: L('copy_link', 'Copy link')
 		}
 	},
-
 };
+
+
+/*
+Pragma private
+*/
+
+function setDriversRowUI(driversNamesArray) {
+	$.sharer_Cont.data = _.map(driversNamesArray, function(name) {
+		if (drivers[name] == null) throw new Error(WNAME+': No share system found with name ' + name);
+
+		var $row = Ti.UI.createTableViewRow({
+			driver: name,
+			selectedBackgroundColor: 'transparent',
+		 });
+		$row.add( Widget.createController('button', drivers[name].args).getView() );
+		return $row;
+	});
+}
+
+
+/*
+Pragma public
+*/
 
 exports.setDriver = function(name, def) {
 	drivers[name] = def;
 };
 
-var args = _.defaults(arguments[0] || {}, {
-	blur: true,
-	drivers: [
-		'facebook',
-		'twitter',
-		'googleplus',
-		'whatsapp',
-		'email',
-		'sms',
-		'copytoclipboard'
-	]
-});
-
-function parseArgs(opt) {
-	var r = _.extend({}, args, opt);
-	if (_.isString(r.drivers)) {
-		r.drivers = opt.drivers.split(',');
-	}
-	return r;
-}
-
-function getDriverRow(name) {
-	if (drivers[name] == null) {
-		throw new Error(WNAME+': No share system found with name ' + name);
-	}
-
-	var $row = Ti.UI.createTableViewRow({ driver: name });
-	$row.add( Widget.createController('button', drivers[name].args).getView() );
-	return $row;
-}
-
-function setDrivers(drivers) {
-	$.sharer_Cont.data = _.map(drivers, getDriverRow);
-}
+exports.extendDriverArgs = function(name, newArgs) {
+	_.extend(drivers[name].args, newArgs);
+};
 
 /*
 UI Listeners
@@ -135,29 +121,36 @@ $.sharer_Cont.addEventListener('click', function(e) {
 	});
 });
 
-
 $.sharer_Close.addEventListener('click', function() {
 	exports.hide();
 });
 
 if (OS_ANDROID) {
-	$.sharer_Win.addEventListener('open', function(e){
+	$.sharer_Win.addEventListener('open', function(){
 		$.sharer_Win.activity.actionBar.hide();
 	});
 }
 
-exports.show = function(so, opt) {
-	if (so == null) {
-		throw new Error('Please set a sharing object');
-	}
 
-	shareObj = _.clone(so);
-	opt = parseArgs(opt);
+/**
+ * @method show
+ * Shared object
+ * @param  {Object} so
+ * @param  {Array} where
+ */
+exports.show = function(so, where) {
+	if (so == null) throw new Error('Please set a sharing object');
 
-	setDrivers(opt.drivers);
+	setDriversRowUI(where || [ 'facebook', 'twitter', 'googleplus', 'whatsapp', 'email', 'message', 'copytoclipboard' ]);
+	shareObj = so;
+
 	$.sharer_Win.open();
 };
 
+/**
+ * @method hide
+ * @return {[type]} [description]
+ */
 exports.hide = function() {
 	$.sharer_Win.close();
 };

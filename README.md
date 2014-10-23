@@ -29,29 +29,16 @@ Download the latest release, unzip in `app/widgets` and add in your *config.json
 ## Usage
 
 ```javascript
-var Sharer = Alloy.createWidget('com.caffeinalab.titanium.sharer', { /* opt */ });
+var Sharer = Alloy.createWidget('com.caffeinalab.titanium.sharer');
 Sharer.show({
 	url: 'http://google.it',
 	text: "Your awesome message!"
 });
 ```
 
-## Constructor options
-
-#### `blur` (Boolean, default: `true`)
-
-*This option will be available on 3.4.0 GA.*
-
-Blur the window.
-
-#### `drivers` (String/Array, default: ALL)
-
-Set the global enabled drivers.
-With an array `[ 'facebook', 'twitter', 'sms' ]` or a comma-separated String `facebook,twitter,sms`.
-
 ## API
 
-#### `show(so, [opt]) `
+#### `show(so, [where]) `
 
 The `so` object represents a `Trimethyl.share` argument.
 
@@ -59,7 +46,7 @@ The `so` object represents a `Trimethyl.share` argument.
 * `text`: The personal share message to use, when supported by driver.
 * `image`: The image to share. Can be a URL or `Ti.Blob`.
 
-The `opt` are merged right with the `Constructor options`.
+`where` is an Array of Strings of enabled drivers.
 
 #### `hide()`
 
@@ -92,3 +79,7 @@ copytoclipboard: {
 	}
 }
 ```
+
+### `extendDriverArgs(name, args)`
+
+Extend a driver only at UI level.
