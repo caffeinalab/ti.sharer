@@ -44,7 +44,8 @@ var drivers = {
 			require('T/sharer').whatsapp(e.shareObj);
 		},
 		args: {
-			title: 'Whatsapp',
+			title: ' Whatsapp',
+			image: WPATH('images/whatsapp.png'),
 			borderColor: '#fff',
 		}
 	},
@@ -53,8 +54,9 @@ var drivers = {
 			require('T/sharer').email(e.shareObj);
 		},
 		args: {
+			title: ' Email',
+			image: WPATH('images/email.png'),
 			borderColor: '#fff',
-			title: 'Email',
 		}
 	},
 	message: {
@@ -62,8 +64,9 @@ var drivers = {
 			require('T/sharer').message(e.shareObj);
 		},
 		args: {
+			title: ' '+L('Message'),
+			image: WPATH('images/message.png'),
 			borderColor: '#fff',
-			title: L('Message')
 		}
 	},
 	copytoclipboard: {
@@ -72,8 +75,9 @@ var drivers = {
 			e.source.title = L('link_copied', 'Link copied!');
 		},
 		args: {
-			borderColor: '#fff',
-			title: L('copy_link', 'Copy link')
+			title: ' '+L('copy_link', 'Copy link'),
+			image: WPATH('images/copytoclipboard.png'),
+			borderColor: '#fff'
 		}
 	},
 };
