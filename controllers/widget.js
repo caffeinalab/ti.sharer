@@ -64,7 +64,7 @@ var drivers = {
 			require('T/sharer').message(e.shareObj);
 		},
 		args: {
-			title: ' '+L('Message'),
+			title: ' ' + L('Message'),
 			image: WPATH('images/message.png'),
 			borderColor: '#fff',
 		}
@@ -72,10 +72,10 @@ var drivers = {
 	copytoclipboard: {
 		callback: function(e) {
 			Ti.UI.Clipboard.setText(e.shareObj.url);
-			e.source.title = L('link_copied', 'Link copied!');
+			e.source.title = ' ' + L('link_copied', 'Link copied!');
 		},
 		args: {
-			title: ' '+L('copy_link', 'Copy link'),
+			title: ' ' + L('copy_link', 'Copy link'),
 			image: WPATH('images/copytoclipboard.png'),
 			borderColor: '#fff'
 		}
