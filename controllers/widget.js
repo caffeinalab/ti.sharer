@@ -148,7 +148,9 @@ exports.show = function(so, where) {
 	setDriversRowUI(where || [ 'facebook', 'twitter', 'googleplus', 'whatsapp', 'email', 'message', 'copytoclipboard' ]);
 	shareObj = so;
 
+	$.sharer_Win.opacity = 0;
 	$.sharer_Win.open();
+	$.sharer_Win.animate({ opacity: 1 });
 };
 
 /**
