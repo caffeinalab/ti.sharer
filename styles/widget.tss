@@ -16,11 +16,11 @@
 	height: 1,
 	left: 30,
 	right: 30,
-	backgroundColor: '#9FFF'
+	backgroundColor: '#2FFF'
 },
 ".sharer_Cont":{
 	top: 80,
-	bottom: 100,
+	bottom: 80,
 	scrollable: true,
 	backgroundColor: 'transparent',
 	separatorColor: 'transparent',
@@ -28,9 +28,6 @@
 ".sharer_Close":{
 	color: '#fff',
 	backgroundColor: 'transparent',
-	bottom: 30,
+	bottom: 20,
 	image: WPATH('/images/close.png'),
-	font:{
-		fontSize: 30
-	},
 },

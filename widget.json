@@ -3,7 +3,7 @@
 	"name": "Ti.Sharer",
 	"description" : "Sharing widget heavy inspired to AirBNB, with default drivers and the ability to add custom drivers to share.",
 	"author": "Flavio De Stefano",
-	"version": "2.0.6",
+	"version": "2.0.7",
 	"copyright":"Copyright (c) 2014",
 	"license":"Apache License, Version 2.0",
 	"min-alloy-version": "1.0",

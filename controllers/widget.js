@@ -1,5 +1,7 @@
 var WNAME = 'com.caffeinalab.titanium.sharer';
-if (Ti.Trimethyl == null) Ti.API.warn(WNAME + ': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
+if (Ti.Trimethyl == null) {
+	Ti.API.warn(WNAME + ': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
+}
 
 var shareObj = null;
 var drivers = {
@@ -11,8 +13,7 @@ var drivers = {
 			title: '  Facebook',
 			image: WPATH('images/facebook.png'),
 			backgroundColor: '#3b5998',
-			borderWidth: 0.5,
-			borderColor: '#2B406E'
+			borderWidth: 0,
 		}
 	},
 	twitter: {
@@ -23,20 +24,7 @@ var drivers = {
 			title: '  Twitter',
 			image: WPATH('images/twitter.png'),
 			backgroundColor: '#55acee',
-			borderWidth: 0.5,
-			borderColor: '#147AC8'
-		}
-	},
-	googleplus: {
-		callback: function(e) {
-			require('T/sharer').googleplus(e.shareObj);
-		},
-		args: {
-			title: '  Google+',
-			image: WPATH('images/googleplus.png'),
-			backgroundColor: '#dd4b39',
-			borderWidth: 0.5,
-			borderColor: '#AE2E1E'
+			borderWidth: 0,
 		}
 	},
 	whatsapp: {
@@ -46,7 +34,8 @@ var drivers = {
 		args: {
 			title: ' Whatsapp',
 			image: WPATH('images/whatsapp.png'),
-			borderColor: '#fff',
+			backgroundColor: '#45C856',
+			borderWidth: 0,
 		}
 	},
 	email: {
@@ -64,7 +53,7 @@ var drivers = {
 			require('T/sharer').message(e.shareObj);
 		},
 		args: {
-			title: ' ' + L('Message'),
+			title: ' ' + L('message', 'Message'),
 			image: WPATH('images/message.png'),
 			borderColor: '#fff',
 		}
@@ -88,16 +77,21 @@ Pragma private
 */
 
 function setDriversRowUI(driversNamesArray) {
-	$.sharer_Cont.data = _.map(driversNamesArray, function(name) {
-		if (drivers[name] == null) throw new Error(WNAME+': No share system found with name ' + name);
+	var data = [];
+	_.each(driversNamesArray, function(name) {
+		if (drivers[name] == null) {
+			Ti.API.error(WNAME+': No share system found with name ' + name);
+			return;
+		}
 
 		var $row = Ti.UI.createTableViewRow({
 			driver: name,
 			selectedBackgroundColor: 'transparent',
 		 });
 		$row.add( Widget.createController('button', drivers[name].args).getView() );
-		return $row;
+		data.push($row);
 	});
+	$.sharer_Cont.data = data;
 }
 
 
@@ -145,7 +139,7 @@ if (OS_ANDROID) {
 exports.show = function(so, where) {
 	if (so == null) throw new Error('Please set a sharing object');
 
-	setDriversRowUI(where || [ 'facebook', 'twitter', 'googleplus', 'whatsapp', 'email', 'message', 'copytoclipboard' ]);
+	setDriversRowUI(where || [ 'facebook', 'twitter', 'whatsapp', 'email', 'message', 'copytoclipboard' ]);
 	shareObj = so;
 
 	$.sharer_Win.opacity = 0;
