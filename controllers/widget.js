@@ -1,5 +1,5 @@
 var WNAME = 'com.caffeinalab.titanium.sharer';
-if (Ti.Trimethyl == null) {
+if (Alloy.Globals.Trimethyl == null) {
 	Ti.API.warn(WNAME + ': This widget require Trimethyl to be installed (https://github.com/CaffeinaLab/Trimethyl)');
 }
 
